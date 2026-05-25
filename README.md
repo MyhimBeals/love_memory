@@ -59,20 +59,20 @@
 
 ```mermaid
 graph TD
-    User([用户浏览器]) -- HTTPS:443 /love/ --> Nginx[Nginx 反向代理]
-    Nginx -- Proxy:5000 --> Gunicorn[Gunicorn 独立容器]
+    User(["用户浏览器"]) -- "HTTPS:443 /love/" --> Nginx["Nginx 反向代理"]
+    Nginx -- "Proxy:5000" --> Gunicorn["Gunicorn 独立容器"]
     
-    subgraph Python Backend (Flask)
-        Gunicorn --> FlaskApp[Flask App Core]
-        FlaskApp -- 1. 一键批量拉取 --> APIAll[/api/all]
-        FlaskApp -- 2. 异步换衣线程 --> TryonThread[Try-on Thread]
-        FlaskApp -- 3. Base64 物理化 --> Migrate[Migration Service]
+    subgraph "Python Backend (Flask)"
+        Gunicorn --> FlaskApp["Flask App Core"]
+        FlaskApp -- "1. 一键批量拉取" --> APIAll["/api/all"]
+        FlaskApp -- "2. 异步换衣线程" --> TryonThread["Try-on Thread"]
+        FlaskApp -- "3. Base64 物理化" --> Migrate["Migration Service"]
     end
 
-    subgraph Storage & Cloud API
-        FlaskApp -- dict 连接池 --> MySQL[(MySQL 8.0 / 远程)]
-        FlaskApp -- 本地持久化 --> LocalMedia[/static/memories/ & /static/tryon/]
-        TryonThread -- Multipart 二进制流 --> ReplicateAPI[Replicate Cloud API<br>IDM-VTON Model]
+    subgraph "Storage & Cloud API"
+        FlaskApp -- "dict 连接池" --> MySQL["MySQL 8.0 (远程)"]
+        FlaskApp -- "本地持久化" --> LocalMedia["/static/memories/ & /static/tryon/"]
+        TryonThread -- "Multipart 二进制流" --> ReplicateAPI["Replicate Cloud API <br> IDM-VTON Model"]
     end
 ```
 

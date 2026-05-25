@@ -22,7 +22,7 @@ Thumbs.db
 love_memory/
 deploy.md
 errors.md
-*.png
+
 
 #忽略agent文件
 /.agent/*
