@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>我们的爱 - 恋爱纪念</title>
+    <link rel="icon" type="image/png" href="favicon.png">
+    <!-- 引入 Google Fonts: Noto Serif SC (思源宋体) 和 Dancing Script -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- 预连接图片服务 -->
+    <link rel="preconnect" href="https://picsum.photos">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Noto+Serif+SC:wght@400;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* 直接在 HTML 中设置背景，让浏览器第一时间开始下载图片 */
+        .background {
+            background-image: url('https://picsum.photos/1920/1080?random=1');
+            opacity: 1 !important;
+            /* 强制显示 */
+        }
+    </style>
+</head>
+
+<body>
+    <div class="background" id="background"></div>
+    <div class="overlay"></div>
+
+    <div class="container">
+        <header>
+            <h1 class="title">我们的故事写了</h1>
+            <p class="subtitle">Since 2024.11.13</p>
+        </header>
+
+        <main class="timer-container glass-effect">
+            <div class="time-box">
+                <span id="days" class="time-value">00</span>
+                <span class="time-label">天</span>
+            </div>
+            <div class="separator">:</div>
+            <div class="time-box">
+                <span id="hours" class="time-value">00</span>
+                <span class="time-label">小时</span>
+            </div>
+            <div class="separator">:</div>
+            <div class="time-box">
+                <span id="minutes" class="time-value">00</span>
+                <span class="time-label">分钟</span>
+            </div>
+            <div class="separator">:</div>
+            <div class="time-box">
+                <span id="seconds" class="time-value">00</span>
+                <span class="time-label">秒</span>
+            </div>
+        </main>
+
+        <section class="quote-section glass-effect">
+            <p id="quote-text">载入中...</p>
+            <p id="quote-from"></p>
+        </section>
+
+        <footer>
+            <!-- 删除了原有的文案 -->
+        </footer>
+    </div>
+
+    <!-- 侧边轮盘功能入口 -->
+    <nav class="side-wheel">
+        <button class="wheel-btn glass-effect" id="btn-bbs">留言板</button>
+        <button class="wheel-btn glass-effect" id="btn-secret">悄悄话</button>
+        <button class="wheel-btn glass-effect" id="btn-memory">记忆墙</button>
+        <button class="wheel-btn glass-effect wheel-btn--tryon" id="btn-tryon">换装魔镜</button>
+    </nav>
+
+    <!-- 弹窗：留言板 -->
+    <div id="modal-bbs" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>💬 双人留言板</h2>
+                <span class="close-btn">&times;</span>
+            </div>
+            <div class="stats-bar">
+                <div class="stat-badge">
+                    <span class="stat-icon">📝</span>
+                    <span>共 <span class="stat-value" id="bbs-count">0</span> 条留言</span>
+                </div>
+            </div>
+            <div class="modal-body">
+                <div id="bbs-list" class="chat-list"></div>
+            </div>
+            <div class="modal-footer">
+                <div class="input-row">
+                    <input type="text" id="bbs-input" placeholder="写下想说的话...">
+                    <button class="send-btn" id="bbs-send">发送</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 弹窗：悄悄话 -->
+    <div id="modal-secret" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>💌 私密信箱</h2>
+                <span class="close-btn">&times;</span>
+            </div>
+            <div id="secret-lock">
+                <p>请输入她的生日（4位数字）</p>
+                <input type="password" id="secret-pwd" placeholder="****">
+                <button id="secret-unlock">进入</button>
+            </div>
+            <div id="secret-content" style="display: none;">
+                <button id="secret-relock" class="relock-btn">🔒 上锁</button>
+                <div class="stats-bar">
+                    <div class="stat-badge">
+                        <span class="stat-icon">💕</span>
+                        <span>共 <span class="stat-value" id="secret-count">0</span> 条悄悄话</span>
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <div id="secret-list" class="secret-list"></div>
+                </div>
+                <div class="modal-footer">
+                    <div class="input-row">
+                        <input type="text" id="secret-input" placeholder="输入私密留言...">
+                        <button class="send-btn" id="secret-send">保存</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 弹窗：共同记忆 -->
+    <div id="modal-memory" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>🌟 我们的共同记忆</h2>
+                <span class="close-btn">&times;</span>
+            </div>
+            <div class="stats-bar">
+                <div class="stat-badge">
+                    <span class="stat-icon">📸</span>
+                    <span>共 <span class="stat-value" id="memory-count">0</span> 段记忆</span>
+                </div>
+            </div>
+            <div class="modal-body">
+                <div class="memory-form">
+                    <div class="form-group">
+                        <label>日期</label>
+                        <input type="date" id="memory-date" class="glass-input">
+                    </div>
+                    <div class="form-group">
+                        <label>回忆</label>
+                        <textarea id="memory-content" class="glass-input" rows="3"
+                            placeholder="那是一个阳光明媚的下午..."></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>感受</label>
+                        <textarea id="memory-feeling" class="glass-input" rows="2" placeholder="我感到满足..."></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>照片</label>
+                        <input type="file" id="memory-file" accept="image/*,video/*" style="display: none;">
+                        <div class="upload-area" id="upload-area">
+                            <span id="upload-text">📷 点击上传照片</span>
+                            <img id="image-preview" src="" style="display: none;">
+                            <div id="video-preview-indicator" style="display: none; color: #a8ffb2; font-size: 1.1rem; font-weight: bold; margin-top: 10px;">
+                                📹 视频已就绪：<span id="video-preview-name" style="font-size: 0.9rem; color: #fff; word-break: break-all;"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <button id="memory-add" class="submit-btn">✨ 添加珍贵记忆</button>
+                </div>
+                <div id="memory-gallery" class="timeline"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 弹窗：换装魔镜 -->
+    <div id="modal-tryon" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>🪄 换装魔镜</h2>
+                <span class="close-btn">&times;</span>
+            </div>
+            <div class="modal-body tryon-body">
+                <!-- 上传区双列 -->
+                <div class="tryon-upload-row">
+                    <div class="tryon-upload-col">
+                        <div class="tryon-label">👤 人物照片</div>
+                        <div class="tryon-drop-zone" id="tryon-human-zone">
+                            <input type="file" id="tryon-human-input" accept="image/*" style="display:none">
+                            <div class="tryon-drop-inner" id="tryon-human-inner">
+                                <span class="tryon-drop-icon">🧍</span>
+                                <span class="tryon-drop-hint">点击上传</span>
+                            </div>
+                            <img id="tryon-human-preview" class="tryon-preview-img" src="" alt="人物预览">
+                        </div>
+                    </div>
+                    <div class="tryon-upload-col">
+                        <div class="tryon-label">👗 衣服图片</div>
+                        <div class="tryon-drop-zone" id="tryon-garm-zone">
+                            <input type="file" id="tryon-garm-input" accept="image/*" style="display:none">
+                            <div class="tryon-drop-inner" id="tryon-garm-inner">
+                                <span class="tryon-drop-icon">👘</span>
+                                <span class="tryon-drop-hint">点击上传</span>
+                            </div>
+                            <img id="tryon-garm-preview" class="tryon-preview-img" src="" alt="衣服预览">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 衣服类型选择 -->
+                <div class="tryon-category-row">
+                    <span class="tryon-cat-label">部位：</span>
+                    <label class="tryon-radio">
+                        <input type="radio" name="tryon-category" value="upper_body" checked> 上装
+                    </label>
+                    <label class="tryon-radio">
+                        <input type="radio" name="tryon-category" value="lower_body"> 下装
+                    </label>
+                    <label class="tryon-radio">
+                        <input type="radio" name="tryon-category" value="dresses"> 连衣裙
+                    </label>
+                </div>
+
+                <!-- 描述词 -->
+                <div class="tryon-desc-row">
+                    <input type="text" id="tryon-desc" class="glass-input tryon-desc-input"
+                        placeholder="可选：简单描述衣服（如：白色棉麻衬衫）">
+                </div>
+
+                <!-- 提交按钮 -->
+                <button id="tryon-submit" class="submit-btn tryon-submit-btn">✨ 开始换装</button>
+
+                <!-- 进度 & 结果区 -->
+                <div id="tryon-status" class="tryon-status" style="display:none">
+                    <div id="tryon-progress" class="tryon-progress">
+                        <div class="tryon-spinner"></div>
+                        <span id="tryon-progress-text">AI 正在为你换装，请耐心等待约 30-60 秒…</span>
+                    </div>
+                    <div id="tryon-result" class="tryon-result" style="display:none">
+                        <p class="tryon-result-label">✨ 换装完成！</p>
+                        <img id="tryon-result-img" class="tryon-result-img" src="" alt="换装结果"
+                            onclick="openLightbox(this.src)">
+                        <button id="tryon-download" class="tryon-download-btn">💾 保存图片</button>
+                        <button id="tryon-retry" class="tryon-retry-btn">🔄 重新换装</button>
+                    </div>
+                    <div id="tryon-error" class="tryon-error" style="display:none">
+                        <span class="tryon-error-icon">😔</span>
+                        <span id="tryon-error-text">换装失败，请稍后重试</span>
+                        <button id="tryon-error-retry" class="tryon-retry-btn">🔄 重试</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 照片灯箱 -->
+    <div id="photo-lightbox" class="photo-lightbox">
+        <div class="lightbox-overlay"></div>
+        <div class="lightbox-loading">
+            <div class="spinner"></div>
+        </div>
+        <span class="lightbox-close">&times;</span>
+        <img class="lightbox-img" id="lightbox-img" src="" alt="照片预览">
+        <video class="lightbox-video" id="lightbox-video" controls autoplay playsinline style="display:none; max-width: 90vw; max-height: 85vh; border-radius: 8px; box-shadow: 0 10px 50px rgba(0,0,0,0.8); z-index: 1001; position: relative; outline: none;"></video>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

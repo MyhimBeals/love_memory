@@ -1,0 +1,28 @@
+# 忽略 Python 编译缓存
+__pycache__/
+*.py[cod]
+*$py.class
+
+# 忽略 Python 虚拟环境目录
+venv/
+env/
+.venv/
+ENV/
+
+# 忽略本地 SQLite 数据库及日志
+*.db
+*.log
+
+# 忽略编辑软件及系统临时文件
+.vscode/
+.DS_Store
+Thumbs.db
+
+#忽略错误的md文件
+love_memory/
+deploy.md
+errors.md
+*.png
+
+#忽略agent文件
+/.agent/*
