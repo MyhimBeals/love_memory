@@ -205,5 +205,5 @@ server {
 ---
 
 <p align="center">
-  由 <a href="https://github.com/yourusername">YourName</a> 倾心设计与开发。愿天下有情人终成眷属。💕
+  由 <a href="https://github.com/yourusername">Beals</a> 倾心设计与开发。愿天下有情人终成眷属。💕
 </p>
