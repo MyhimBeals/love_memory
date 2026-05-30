@@ -407,7 +407,10 @@ document.addEventListener('DOMContentLoaded', () => {
         const pwd = document.getElementById('memory-pwd').value;
         if (pwd === '0825') {
             document.getElementById('memory-lock').style.display = 'none';
-            document.getElementById('memory-content').style.display = 'block';
+            document.getElementById('memory-content').style.display = 'flex';
+            document.getElementById('memory-content').style.flexDirection = 'column';
+            document.getElementById('memory-content').style.flex = '1';
+            document.getElementById('memory-content').style.overflow = 'hidden';
             renderMemories();
         } else {
             alert('密码错啦，再想想？');
