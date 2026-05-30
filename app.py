@@ -7,12 +7,39 @@ import threading
 import uuid
 import time
 import json
-import fcntl
 import base64
 import httpx
 import concurrent.futures
 from datetime import datetime
 from pathlib import Path
+
+# ========================================
+#  动态加载本地 .env 环境配置
+# ========================================
+ENV_FILE = Path(__file__).parent / '.env'
+if ENV_FILE.exists():
+    with open(ENV_FILE, 'r', encoding='utf-8') as f:
+        for line in f:
+            line = line.strip()
+            # 忽略空行、注释行或无有效赋值的行
+            if not line or line.startswith('#') or '=' not in line:
+                continue
+            key, val = line.split('=', 1)
+            # 加载到 os.environ，并剥离首尾引号
+            os.environ[key.strip()] = val.strip().strip("'\"")
+
+# ⚠️ 启动安全校验：数据库关键配置缺失时强行终止，确保 GitHub 开源安全
+required_envs = ['DB_HOST', 'DB_PASSWORD']
+missing_envs = [env for env in required_envs if not os.environ.get(env)]
+if missing_envs:
+    raise RuntimeError(
+        f"\n========================================================\n"
+        f"❌ 启动失败：未检测到必要的环境变量：{', '.join(missing_envs)}\n"
+        f"👉 请复制 .env.example 并命名为 .env，然后填写您的数据库连接参数！\n"
+        f"========================================================"
+    )
+
+import fcntl
 
 app = Flask(__name__, static_folder='.', static_url_path='')
 CORS(app)
@@ -33,11 +60,11 @@ def log_debug(message):
 #  数据库连接池（核心优化）
 # ========================================
 DB_CONFIG = {
-    'host': 'us.brocnbb.org',
-    'port': 33067,
-    'user': 'root',
-    'password': 'loveyou2026@@',
-    'database': 'love_db',
+    'host': os.environ.get('DB_HOST'),
+    'port': int(os.environ.get('DB_PORT', 3306)),
+    'user': os.environ.get('DB_USER', 'root'),
+    'password': os.environ.get('DB_PASSWORD'),
+    'database': os.environ.get('DB_NAME', 'love_db'),
     'charset': 'utf8mb4',
     'connect_timeout': 5,
 }
@@ -425,7 +452,7 @@ TRYON_OUTPUT_DIR = Path(__file__).parent / 'static' / 'tryon'
 TRYON_OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 
 # 本站域名（用于拼接返回给前端的图片 URL）
-SITE_BASE_URL = os.environ.get('SITE_BASE_URL', 'https://us.brocnbb.org')
+SITE_BASE_URL = os.environ.get('SITE_BASE_URL', 'http://localhost:5000')
 
 # ========================================
 #  任务状态持久化（JSON 文件，支持多 worker / 重启）

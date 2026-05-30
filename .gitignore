@@ -26,3 +26,6 @@ errors.md
 
 #忽略agent文件
 /.agent/*
+
+# 忽略敏感的环境配置文件
+.env
