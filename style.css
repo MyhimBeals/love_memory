@@ -839,12 +839,12 @@ body {
 }
 
 /* 上锁界面 */
-#secret-lock {
+#secret-lock, #memory-lock {
     padding: 2.5rem 1rem;
     text-align: center;
 }
 
-#secret-lock h2 {
+#secret-lock h2, #memory-lock h2 {
     margin-bottom: 1.5rem;
     background: linear-gradient(130deg, #fff 0%, rgba(200, 190, 255, 0.9) 100%);
     -webkit-background-clip: text;
@@ -852,14 +852,14 @@ body {
     background-clip: text;
 }
 
-#secret-lock p {
+#secret-lock p, #memory-lock p {
     opacity: 0.55;
     margin-bottom: 1.5rem;
     font-size: 0.88rem;
     letter-spacing: 1px;
 }
 
-#secret-lock input {
+#secret-lock input, #memory-lock input {
     background: rgba(255, 255, 255, 0.06);
     border: 1px solid rgba(255, 255, 255, 0.14);
     padding: 0.85rem 1rem;
@@ -874,13 +874,13 @@ body {
     font-family: inherit;
 }
 
-#secret-lock input:focus {
+#secret-lock input:focus, #memory-lock input:focus {
     border-color: rgba(196, 181, 253, 0.5);
     background: rgba(255, 255, 255, 0.09);
     box-shadow: 0 0 20px rgba(196, 181, 253, 0.12);
 }
 
-#secret-lock button {
+#secret-lock button, #memory-lock button {
     display: inline-block;
     margin-top: 1.5rem;
     padding: 0.7rem 2.4rem;
@@ -897,7 +897,7 @@ body {
     transition: all 0.35s;
 }
 
-#secret-lock button:hover {
+#secret-lock button:hover, #memory-lock button:hover {
     background: linear-gradient(135deg,
             rgba(196, 181, 253, 0.38) 0%,
             rgba(251, 113, 133, 0.32) 100%);
@@ -1070,8 +1070,10 @@ body {
 
 .timeline-card .card-img {
     width: 100%;
-    height: 155px;
-    object-fit: cover;
+    height: auto;
+    max-height: 480px;
+    object-fit: contain;
+    background: rgba(0, 0, 0, 0.15); /* 用于极少部分边缘留白的细致背景色兜底 */
     display: block;
     transition: transform 0.55s ease;
 }
@@ -1541,7 +1543,8 @@ body {
     }
 
     .timeline-card .card-img {
-        height: 140px;
+        height: auto;
+        max-height: 360px;
     }
 
     .timeline-card .card-content {
