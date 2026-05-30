@@ -126,15 +126,33 @@ python -m venv .venv
 pip install -r requirements.txt
 ```
 
-### 3. 配置环境变量
-在使用 AI 换装魔镜之前，你需要在系统环境变量中配置你的 Replicate Token：
-```bash
-# Windows PowerShell
-$env:REPLICATE_API_TOKEN="your_replicate_token_here"
+### 3. 配置本地环境变量 (.env)
 
-# Linux / macOS
-export REPLICATE_API_TOKEN="your_replicate_token_here"
+项目已内置无外部依赖的环境变量加载引擎。请复制根目录下的 `.env.example` 并重命名为 `.env`，然后填写您本地的数据库连接参数及 Replicate API 凭证：
+
+```bash
+# 复制模板文件
+cp .env.example .env
 ```
+
+随后打开 `.env` 填写真实参数即可：
+```ini
+# 数据库配置
+DB_HOST=your_database_host
+DB_PORT=3306
+DB_USER=your_database_user
+DB_PASSWORD=your_database_password
+DB_NAME=love_db
+
+# 站点域名
+SITE_BASE_URL=http://localhost:5000
+
+# Replicate 令牌 (换镜助手必需)
+REPLICATE_API_TOKEN=your_replicate_token_here
+```
+
+> [!IMPORTANT]
+> **本地创建的 `.env` 文件包含真实的数据库连接凭证，已在 `.gitignore` 中被安全过滤，切勿上传提交至 GitHub 公开仓库！**
 
 ### 4. 运行开发服务器
 ```bash
