@@ -140,41 +140,49 @@
                 <h2>🌟 我们的共同记忆</h2>
                 <span class="close-btn">&times;</span>
             </div>
-            <div class="stats-bar">
-                <div class="stat-badge">
-                    <span class="stat-icon">📸</span>
-                    <span>共 <span class="stat-value" id="memory-count">0</span> 段记忆</span>
-                </div>
+            <div id="memory-lock">
+                <p>请输入她的生日（4位数字）</p>
+                <input type="password" id="memory-pwd" placeholder="****">
+                <button id="memory-unlock">进入</button>
             </div>
-            <div class="modal-body">
-                <div class="memory-form">
-                    <div class="form-group">
-                        <label>日期</label>
-                        <input type="date" id="memory-date" class="glass-input">
+            <div id="memory-content" style="display: none;">
+                <button id="memory-relock" class="relock-btn">🔒 上锁</button>
+                <div class="stats-bar">
+                    <div class="stat-badge">
+                        <span class="stat-icon">📸</span>
+                        <span>共 <span class="stat-value" id="memory-count">0</span> 段记忆</span>
                     </div>
-                    <div class="form-group">
-                        <label>回忆</label>
-                        <textarea id="memory-content" class="glass-input" rows="3"
-                            placeholder="那是一个阳光明媚的下午..."></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label>感受</label>
-                        <textarea id="memory-feeling" class="glass-input" rows="2" placeholder="我感到满足..."></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label>照片</label>
-                        <input type="file" id="memory-file" accept="image/*,video/*" style="display: none;">
-                        <div class="upload-area" id="upload-area">
-                            <span id="upload-text">📷 点击上传照片</span>
-                            <img id="image-preview" src="" style="display: none;">
-                            <div id="video-preview-indicator" style="display: none; color: #a8ffb2; font-size: 1.1rem; font-weight: bold; margin-top: 10px;">
-                                📹 视频已就绪：<span id="video-preview-name" style="font-size: 0.9rem; color: #fff; word-break: break-all;"></span>
+                </div>
+                <div class="modal-body">
+                    <div class="memory-form">
+                        <div class="form-group">
+                            <label>日期</label>
+                            <input type="date" id="memory-date" class="glass-input">
+                        </div>
+                        <div class="form-group">
+                            <label>回忆</label>
+                            <textarea id="memory-content" class="glass-input" rows="3"
+                                placeholder="那是一个阳光明媚的下午..."></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>感受</label>
+                            <textarea id="memory-feeling" class="glass-input" rows="2" placeholder="我感到满足..."></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>照片</label>
+                            <input type="file" id="memory-file" accept="image/*,video/*" style="display: none;">
+                            <div class="upload-area" id="upload-area">
+                                <span id="upload-text">📷 点击上传照片</span>
+                                <img id="image-preview" src="" style="display: none;">
+                                <div id="video-preview-indicator" style="display: none; color: #a8ffb2; font-size: 1.1rem; font-weight: bold; margin-top: 10px;">
+                                    📹 视频已就绪：<span id="video-preview-name" style="font-size: 0.9rem; color: #fff; word-break: break-all;"></span>
+                                </div>
                             </div>
                         </div>
+                        <button id="memory-add" class="submit-btn">✨ 添加珍贵记忆</button>
                     </div>
-                    <button id="memory-add" class="submit-btn">✨ 添加珍贵记忆</button>
+                    <div id="memory-gallery" class="timeline"></div>
                 </div>
-                <div id="memory-gallery" class="timeline"></div>
             </div>
         </div>
     </div>

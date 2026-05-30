@@ -67,7 +67,10 @@ document.addEventListener('DOMContentLoaded', () => {
             document.getElementById('secret-lock').style.display = 'block';
             document.getElementById('secret-content').style.display = 'none';
         }
-        if (type === 'memory') renderMemories();
+        if (type === 'memory') {
+            document.getElementById('memory-lock').style.display = 'block';
+            document.getElementById('memory-content').style.display = 'none';
+        }
     }
 
     function closeAllModals() {
@@ -397,6 +400,24 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('secret-content').style.display = 'none';
         document.getElementById('secret-lock').style.display = 'block';
         document.getElementById('secret-pwd').value = '';
+    };
+
+    // 记忆墙密码锁逻辑
+    document.getElementById('memory-unlock').onclick = () => {
+        const pwd = document.getElementById('memory-pwd').value;
+        if (pwd === '0825') {
+            document.getElementById('memory-lock').style.display = 'none';
+            document.getElementById('memory-content').style.display = 'block';
+            renderMemories();
+        } else {
+            alert('密码错啦，再想想？');
+        }
+    };
+
+    document.getElementById('memory-relock').onclick = () => {
+        document.getElementById('memory-content').style.display = 'none';
+        document.getElementById('memory-lock').style.display = 'block';
+        document.getElementById('memory-pwd').value = '';
     };
 
     // ========================================
